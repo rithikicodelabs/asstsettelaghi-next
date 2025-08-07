@@ -1,5 +1,130 @@
 @import "design-tokens-italia/css/_variables.css";
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
 
-*{
-  background-color: var(--color-background-primary-light);
+/* Header Styles */
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.header-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+}
+
+.header-top-bar {
+  background-color: #f8f9fa;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+}
+
+.header-top-bar .regional-portal-link,
+.header-top-bar .personal-area-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header-top-bar .regional-portal-link:hover,
+.header-top-bar .personal-area-link:hover {
+  text-decoration: underline;
+}
+
+.header-middle-bar {
+  padding: 1rem 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.header-middle-bar .social-label {
+  font-weight: 500;
+  color: #495057;
+}
+
+.header-middle-bar .search-btn {
+  font-size: 0.875rem;
+}
+
+.header-main-navigation {
+  padding: 1rem 0;
+  background-color: #fff;
+}
+
+.header-main-navigation .nav-link {
+  color: #495057;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.header-main-navigation .nav-link:hover {
+  background-color: #e9ecef;
+  color: #212529;
+}
+
+.header-bottom-bar {
+  background-color: #f8f9fa;
+  padding: 1rem 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+.phone-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.phone-number-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.phone-label {
+  font-weight: 500;
+  color: #495057;
+}
+
+.phone-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.phone-link:hover {
+  text-decoration: underline;
+}
+
+.call-to-action {
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header-top-bar .row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .header-top-bar .col.text-end {
+    text-align: left !important;
+  }
+  
+  .phone-numbers {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .phone-number-item {
+    flex-direction: column;
+    text-align: center;
+  }
 }

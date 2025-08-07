@@ -1,5 +1,4 @@
-'use client'
-import { Navbar } from "design-react-kit";
+import Header from "@/components/Header";
 
 export default function RootLayout({
   children,
@@ -8,7 +7,7 @@ export default function RootLayout({
 }>) {
   return (
     <div>
-        <Navbar/>
+        <Header/>
         {children}
     </div>
   );
