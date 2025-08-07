@@ -1,0 +1,5 @@
+@import "design-tokens-italia/css/_variables.css";
+
+*{
+  background-color: var(--color-background-primary-light);
+}
