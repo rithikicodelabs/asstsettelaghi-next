@@ -50,14 +50,20 @@ const Footer: React.FC = () => {
 
     const linkProps = {
       className: linkClasses,
-      ...(link.openInNewTab && { target: '_blank', rel: 'noopener noreferrer' }),
+      ...(link.openInNewTab && {
+        target: '_blank',
+        rel: 'noopener noreferrer',
+      }),
       'aria-label': link.ariaLabel || link.label,
     };
 
     const linkContent = (
       <>
         {link.icon && (
-          <span className="d-inline-block me-2" style={{ width: '1rem', height: '1rem' }}>
+          <span
+            className="d-inline-block me-2"
+            style={{ width: '1rem', height: '1rem' }}
+          >
             {/* You can add icon rendering logic here based on the icon value */}
             {link.icon}
           </span>
@@ -75,14 +81,14 @@ const Footer: React.FC = () => {
             {linkContent}
           </Link>
         );
-      
+
       case 'external':
         return (
           <a href={link.url} {...linkProps}>
             {linkContent}
           </a>
         );
-      
+
       default:
         return (
           <Link href={link.url} {...linkProps}>
@@ -108,15 +114,15 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-dark text-white py-5">
+    <footer className="teal-dark-bg text-white py-5">
       <div className="container">
         <div className="row">
           {/* Branding Section */}
           <div className="col-12 mb-4">
             <div className="row align-items-center">
               <div className="col-md-6">
-                <Branding 
-                  variant="footer" 
+                <Branding
+                  variant="footer"
                   showLogo={true}
                   showName={true}
                   showTagline={true}
@@ -126,8 +132,8 @@ const Footer: React.FC = () => {
               <div className="col-md-6 text-md-end">
                 <div className="d-flex align-items-center justify-content-md-end">
                   <span className="text-white-50 me-3">Seguici su</span>
-                  <Branding 
-                    variant="footer" 
+                  <Branding
+                    variant="footer"
                     showLogo={false}
                     showName={false}
                     showTagline={false}
@@ -145,10 +151,10 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Separator */}
         <div className="border-top border-secondary my-4"></div>
-        
+
         {/* Bottom Section with Contacts and Legal Links */}
         <div className="row">
           <div className="col-md-6">
@@ -156,38 +162,35 @@ const Footer: React.FC = () => {
           </div>
           <div className="col-md-6 text-md-end">
             <div className="d-flex flex-column gap-2">
-              <a 
-                href="/accessibilita" 
+              <a
+                href="/accessibilita"
                 className="text-muted text-decoration-none small"
               >
                 Dichiarazione di accessibilità
               </a>
-              <a 
-                href="/faq" 
-                className="text-muted text-decoration-none small"
-              >
+              <a href="/faq" className="text-muted text-decoration-none small">
                 FAQ
               </a>
-              <a 
-                href="/cookie" 
+              <a
+                href="/cookie"
                 className="text-muted text-decoration-none small"
               >
                 Informativa cookie
               </a>
-              <a 
-                href="/privacy" 
+              <a
+                href="/privacy"
                 className="text-muted text-decoration-none small"
               >
                 Informativa privacy
               </a>
-              <a 
-                href="/note-legali" 
+              <a
+                href="/note-legali"
                 className="text-muted text-decoration-none small"
               >
                 Note legali
               </a>
-              <a 
-                href="/mappa-sito" 
+              <a
+                href="/mappa-sito"
                 className="text-muted text-decoration-none small"
               >
                 Mappa del sito
@@ -200,4 +203,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer; 
+export default Footer;

@@ -4,6 +4,7 @@
 :root {
   --teal: #07768d;
   --tealDark: #0f4b57;
+  --darkGreen: #03313a;
   --tealLight: #f4fafb;
   --purple: #9c0769;
   --grayish-cyan: #cde9ee;
@@ -45,6 +46,10 @@ body {
 
 .teal-light-bg {
   background-color: var(--tealLight) !important;
+}
+
+.--darkGreen-bg {
+  background-color: var(--darkGreen) !important;
 }
 
 .border-color-grayish-cyan {
