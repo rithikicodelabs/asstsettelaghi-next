@@ -6,6 +6,7 @@ import { useBrandingContext } from './BrandingProvider';
 import { useHeaderStore } from '@/store/headerStore';
 import Link from 'next/link';
 import Image from 'next/image';
+import IconCollection from './IconCollection/IconCollection';
 
 const MobileNavDrawer: React.FC = () => {
   const { isDrawerOpen, closeDrawer } = useMobileNavStore();
@@ -18,20 +19,47 @@ const MobileNavDrawer: React.FC = () => {
     switch (platform.toLowerCase()) {
       case 'facebook':
         return (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.832 22.25V12.7604H17.1213L17.6142 9.05208H13.832V6.67708C13.832 5.63542 14.1427 4.875 15.7285 4.875H17.732V1.5625C16.7569 1.46197 15.7769 1.41329 14.7963 1.41667C11.882 1.41667 9.88917 3.14583 9.88917 6.3125V9.04167H6.6106V12.7604H9.88917V22.25H13.832Z"
+              fill="#07768D"
+            />
           </svg>
         );
       case 'linkedin':
         return (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.84508 21.333H2.97508V8.87049H6.84508V21.333ZM4.908 7.17049C3.6705 7.17049 2.66675 6.14549 2.66675 4.908C2.66675 4.31358 2.90288 3.74351 3.32319 3.32319C3.74351 2.90288 4.31358 2.66675 4.908 2.66675C5.50241 2.66675 6.07249 2.90288 6.4928 3.32319C6.91312 3.74351 7.14925 4.31358 7.14925 4.908C7.14925 6.14549 6.14508 7.17049 4.908 7.17049ZM21.3292 21.333H17.4676V15.2663C17.4676 13.8205 17.4384 11.9663 15.4555 11.9663C13.4434 11.9663 13.1351 13.5372 13.1351 15.1622V21.333H9.26925V8.87049H12.9809V10.5705H13.0351C13.5517 9.59132 14.8138 8.55799 16.6967 8.55799C20.6134 8.55799 21.3334 11.1372 21.3334 14.4872V21.333H21.3292Z"
+              fill="#07768D"
+            />
           </svg>
         );
       case 'whatsapp':
         return (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19.2425 4.34635C18.2912 3.3881 17.159 2.62833 15.9117 2.11114C14.6644 1.59394 13.3268 1.32963 11.9765 1.33354C6.3119 1.33354 1.70243 5.943 1.70243 11.6076C1.70095 13.4105 2.17336 15.182 3.07231 16.7447L1.6145 22.0669L7.06163 20.6368C8.56792 21.458 10.2563 21.8877 11.9719 21.8864H11.9765C17.6366 21.8864 22.3478 17.2769 22.3478 11.6123C22.3478 8.86788 21.1816 6.2901 19.2425 4.34635ZM11.9765 20.1555C10.446 20.1568 8.94326 19.746 7.62624 18.9661L7.31617 18.781L4.08584 19.6279L4.94664 16.4763L4.74301 16.1523C3.88748 14.7911 3.43499 13.2154 3.43792 11.6076C3.43792 6.90099 7.26989 3.06903 11.9812 3.06903C13.1028 3.06566 14.2139 3.28526 15.2499 3.71508C16.286 4.1449 17.2262 4.77637 18.016 5.57276C19.6266 7.18793 20.617 9.33068 20.6123 11.6123C20.6123 16.3236 16.6832 20.1555 11.9765 20.1555ZM16.6601 13.7597C16.4055 13.6301 15.1421 13.0099 14.906 12.9266C14.67 12.8433 14.4988 12.797 14.3276 13.0562C14.1563 13.3154 13.6658 13.8892 13.513 14.0651C13.3603 14.241 13.2122 14.2595 12.9577 14.1299C11.449 13.3755 10.4586 12.7832 9.46355 11.0754C9.19976 10.6219 9.72734 10.6543 10.2179 9.67315C10.3012 9.50192 10.2596 9.35382 10.1948 9.22424C10.13 9.09465 9.61627 7.83122 9.40339 7.31751C9.19513 6.81769 8.98224 6.88711 8.82489 6.87785C8.67679 6.8686 8.50556 6.8686 8.33432 6.8686C8.20439 6.8722 8.07658 6.90239 7.95877 6.95731C7.84097 7.01223 7.73567 7.09072 7.64938 7.18793C7.41336 7.4471 6.75156 8.06724 6.75156 9.33068C6.75156 10.5941 7.67252 11.8159 7.79748 11.9871C7.92243 12.1584 9.60702 14.75 12.1848 15.8654C13.8138 16.5688 14.4525 16.629 15.267 16.5087C15.7622 16.4346 16.785 15.8885 16.9979 15.2869C17.2108 14.6852 17.2108 14.1715 17.146 14.0651C17.0858 13.9494 16.9146 13.8846 16.6601 13.7597Z"
+              fill="#07768D"
+            />
           </svg>
         );
       case 'youtube':
@@ -50,90 +78,80 @@ const MobileNavDrawer: React.FC = () => {
       {isDrawerOpen && (
         <div className="default-nav-drawer-backdrop" onClick={closeDrawer} />
       )}
-
       <div
-        className={`default-nav-drawer ${isDrawerOpen ? 'open' : ''}`}
+        className={`w-100 position-fixed top-0 nav-drawer-wrapper ${isDrawerOpen ? 'open' : ''}`}
         style={{
           left: isDrawerOpen ? 0 : '-100%',
+          zIndex: '1050',
         }}
       >
-        {/* Header */}
-        <div className="">
-          <div className="nav-drawer-branding-container d-flex align-items-center">
-            {brandingData?.logo ? (
-              <Image
-                src={brandingData.logo.url}
-                alt={brandingData.logo.alternativeText || brandingData.name}
-                width={40}
-                height={40}
-                className="me-3"
-              />
-            ) : (
-              <div
-                className="bg-primary rounded p-2 me-3"
-                style={{ width: '40px', height: '40px' }}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                </svg>
+        <div className={`default-nav-drawer top-0`}>
+          {/* Header */}
+          <div className="">
+            <div className="nav-drawer-branding-container mt-4 d-flex align-items-center ms-2">
+              {brandingData?.logo ? (
+                <Image
+                  src={brandingData.logo.url}
+                  alt={brandingData.logo.alternativeText || brandingData.name}
+                  width={40}
+                  height={40}
+                  className="me-3"
+                />
+              ) : (
+                <IconCollection name="defaultLogo" />
+              )}
+              <div>
+                <h1 className="h1">{brandingData?.name || 'ASL Roma'}</h1>
               </div>
-            )}
-            <div>
-              <h6 className="mb-0 text-primary fw-bold">
-                {brandingData?.name || 'ASL Roma'}
-              </h6>
             </div>
           </div>
-        </div>
 
-        {/* Navigation Links */}
-        <div className="p-3">
-          <nav className="nav flex-column">
-            {headerData?.mainNavigation?.mainNavigationItem?.map(
-              (item, index) => (
-                <Link
-                  key={index}
-                  href={item.url || '#'}
-                  className="nav-link text-primary py-2 px-0 border-0"
-                  onClick={closeDrawer}
+          {/* Navigation Links */}
+          <div className="nav-drawer-menu-container">
+            <div className="d-flex flex-column gap-4">
+              {headerData?.mainNavigation?.mainNavigationItem?.map(
+                (item, index) => (
+                  <Link
+                    key={index}
+                    href={item.url || '#'}
+                    className="p-0 m-0 text-decoration-none text-teal fw-semibold fs-6 lh-base"
+                    onClick={closeDrawer}
+                  >
+                    {item.label}
+                  </Link>
+                ),
+              )}
+            </div>
+          </div>
+
+          {/* Social Media Section */}
+          <div className="nav-drawer-social-container">
+            <h6 className="mb-2 fs-6 lh-base fw-normal">Seguici su</h6>
+            <div className="d-flex gap-3">
+              {brandingData?.socialLinks?.map((social) => (
+                <a
+                  key={social.id}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-decoration-none"
+                  aria-label={`Follow us on ${social.platform}`}
                 >
-                  {item.label}
-                </Link>
-              ),
-            )}
-          </nav>
-        </div>
-
-        {/* Social Media Section */}
-        <div className="p-3 border-top mt-auto">
-          <h6 className="text-primary mb-3">Seguici su</h6>
-          <div className="d-flex gap-3">
-            {brandingData?.socialLinks?.map((social) => (
-              <a
-                key={social.id}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary text-decoration-none"
-                aria-label={`Follow us on ${social.platform}`}
-              >
-                {getSocialIcon(social.platform)}
-              </a>
-            ))}
+                  {getSocialIcon(social.platform)}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Close Button */}
         <button
           onClick={closeDrawer}
-          className="btn-close position-absolute"
-          style={{
-            top: '1rem',
-            right: '1rem',
-            zIndex: 1060,
-          }}
+          className="closeBtn position-absolute top-0 mt-4 "
           aria-label="Close navigation"
-        />
+        >
+          <IconCollection name="modalCloseX" />
+        </button>
       </div>
     </>
   );

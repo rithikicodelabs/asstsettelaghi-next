@@ -14,6 +14,7 @@
 :root {
   --primaryColor: var(--teal);
   --textColor: var(--dark-gray);
+  --sidebarWidth: 298px;
 }
 
 /* font family define */
@@ -52,6 +53,10 @@ body {
 
 .text-purple {
   color: var(--purple) !important;
+}
+
+.text-teal {
+  color: var(--teal);
 }
 
 /* HEADER UI STYLING  */
@@ -265,22 +270,52 @@ body {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1040;
 }
 
-.default-nav-drawer {
-  position: fixed;
-  top: 0;
-  width: 280px;
-  height: 100vh;
-  background-color: white;
-  z-index: 1050;
-  transition: left 0.3s ease-in-out;
-  overflow-y: auto;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-}
+.nav-drawer-wrapper {
+  .default-nav-drawer {
+    top: 0;
+    width: var(--sidebarWidth);
+    height: 100vh;
+    background-color: white;
+    z-index: 1050;
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1041;
 
+    .nav-drawer-branding-container {
+      margin-top: var(--spacing-xxl);
 
-.nav-drawer-branding-container{
-  
+      & .h1 {
+        color: var(--teal);
+        font-weight: var(--heading-5-font-weight);
+        font-size: var(--heading-5-font-size);
+        line-height: var(--heading-5-line-height);
+      }
+    }
+
+    .nav-drawer-menu-container {
+      padding: 56px 12px;
+    }
+
+    .nav-drawer-social-container {
+      padding: 0 12px;
+
+      & h6 {
+        color: #2f475e;
+        letter-spacing: 0;
+      }
+    }
+  }
+
+  .closeBtn {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    background-color: transparent;
+    left: calc(var(--sidebarWidth) + 29px);
+    width: fit-content;
+  }
 }
