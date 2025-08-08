@@ -29,7 +29,7 @@ export const useBrandingStore = create<BrandingStore>((set, get) => ({
       try {
         await fetchPromise;
         return;
-      } catch (error) {
+      } catch {
         console.log('Previous fetch failed, starting new one');
       }
     }
@@ -55,13 +55,13 @@ export const useBrandingStore = create<BrandingStore>((set, get) => ({
         });
         console.log('Branding data fetched successfully');
         return data;
-      } catch (error) {
-        console.error('Error fetching branding data:', error);
+      } catch (err) {
+        console.error('Error fetching branding data:', err);
         set({ 
           isLoading: false, 
-          error: error instanceof Error ? error.message : 'Failed to fetch branding data' 
+          error: err instanceof Error ? err.message : 'Failed to fetch branding data' 
         });
-        throw error;
+        throw err;
       } finally {
         fetchPromise = null;
       }

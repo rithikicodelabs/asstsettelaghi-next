@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { HeaderData, StrapiResponse } from '@/types/header';
 import { FooterData, StrapiFooterResponse } from '@/types/footer';
-import { BrandingData, StrapiBrandingResponse } from '@/types/branding';
+import { BrandingData, StrapiBrandingResponse, RawStrapiBrandingData } from '@/types/branding';
 import { config, getApiHeaders } from './config';
+import { fallbackBrandingData, fallbackFooterData, fallbackHeaderData } from './fallbackData';
 
 const api = axios.create({
   baseURL: `${config.strapi.baseUrl}/api`,
@@ -10,73 +11,11 @@ const api = axios.create({
   timeout: 10000, // 10 second timeout
 });
 
-// Fallback header data in case Strapi is unavailable
-const fallbackHeaderData: HeaderData = {
-  topBar: {
-    regionalPortal: {
-      linkType: 'external',
-      label: 'Portale Regionale',
-      url: '#',
-      openInNewTab: true,
-    },
-    personalArea: {
-      linkType: 'internal',
-      label: 'Area Personale',
-      url: '#',
-      openInNewTab: false,
-    },
-  },
-  middleBar: {
-    socialLabel: 'Seguici sui social',
-    searchLabel: 'Cerca',
-    searchEnabled: true,
-  },
-  mainNavigation: {
-    id: 1,
-    mainNavigationItem: [
-      {
-        id: 1,
-        linkType: 'internal',
-        label: 'Home',
-        url: '/',
-        openInNewTab: false,
-      },
-      {
-        id: 2,
-        linkType: 'internal',
-        label: 'Servizi',
-        url: '/servizi',
-        openInNewTab: false,
-      },
-      {
-        id: 3,
-        linkType: 'internal',
-        label: 'Contatti',
-        url: '/contatti',
-        openInNewTab: false,
-      },
-    ],
-  },
-  bottomBar: {
-    id: 1,
-    phoneNumbers: [
-      {
-        label: 'Centralino',
-        phoneNumber: '+39 123 456 7890',
-        callToAction: 'Chiama ora',
-      },
-    ],
-  },
-};
 
 export const fetchHeaderData = async (): Promise<HeaderData> => {
   try {
     console.log('Fetching header data from Strapi...');
-    console.log('Strapi URL:', `${config.strapi.baseUrl}/api`);
-    
-    // Try multiple approaches to get header data
     const approaches = [
-      // Approach 1: Direct fetch with populate
       async () => {
         console.log('Approach 1: Direct fetch with populate...');
         const response = await api.get<StrapiResponse<HeaderData>>('/header', {
@@ -107,78 +46,6 @@ export const fetchHeaderData = async (): Promise<HeaderData> => {
         }
         throw new Error('No data in response');
       },
-      
-      // Approach 2: URL-encoded populate
-      async () => {
-        console.log('Approach 2: URL-encoded populate...');
-        const response = await api.get<StrapiResponse<HeaderData>>('/header', {
-          params: {
-            'populate[topBar][populate]': '*',
-            'populate[middleBar][populate]': '*',
-            'populate[mainNavigation][populate]': '*',
-            'populate[bottomBar][populate]': '*'
-          }
-        });
-        
-        if (response.data.data) {
-          console.log('✅ Approach 2 successful');
-          // Check if data is in attributes or directly in data
-          const headerData = response.data.data.attributes || response.data.data;
-          console.log('Extracted header data:', headerData);
-          return headerData;
-        }
-        throw new Error('No data in response');
-      },
-      
-      // Approach 3: Simple populate
-      async () => {
-        console.log('Approach 3: Simple populate...');
-        const response = await api.get<StrapiResponse<HeaderData>>('/header?populate=*');
-        
-        if (response.data.data) {
-          console.log('✅ Approach 3 successful');
-          // Check if data is in attributes or directly in data
-          const headerData = response.data.data.attributes || response.data.data;
-          console.log('Extracted header data:', headerData);
-          return headerData;
-        }
-        throw new Error('No data in response');
-      },
-      
-      // Approach 4: Document ID approach
-      async () => {
-        console.log('Approach 4: Document ID approach...');
-        
-        // First get document ID
-        const docResponse = await api.get('/header');
-        let documentId: string | null = null;
-        
-        if (docResponse.data.data && docResponse.data.data.documentId) {
-          documentId = docResponse.data.data.documentId;
-          console.log('Found document ID:', documentId);
-        }
-        
-        if (documentId) {
-          const response = await api.get('/header', {
-            params: {
-              'filters[documentId][$eq]': documentId,
-              'populate[topBar][populate]': '*',
-              'populate[middleBar][populate]': '*',
-              'populate[mainNavigation][populate]': '*',
-              'populate[bottomBar][populate]': '*'
-            }
-          });
-          
-          if (response.data.data && response.data.data.length > 0) {
-            console.log('✅ Approach 4 successful');
-            // Check if data is in attributes or directly in data
-            const headerData = response.data.data[0].attributes || response.data.data[0];
-            console.log('Extracted header data:', headerData);
-            return headerData;
-          }
-        }
-        throw new Error('Document ID approach failed');
-      }
     ];
     
     // Try each approach until one works
@@ -231,7 +98,7 @@ export const getHeaderDataForISR = async (): Promise<HeaderData> => {
 export const testStrapiConnection = async (): Promise<{ connected: boolean; message: string }> => {
   try {
     // Try to connect to the header endpoint instead of root
-    const response = await api.get('/header');
+    await api.get('/header');
     return { connected: true, message: 'Strapi is running and header endpoint accessible' };
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -322,60 +189,6 @@ export const fetchHeaderByDocumentId = async (documentId: string): Promise<Heade
   }
 };
 
-// Fallback footer data in case Strapi is unavailable
-const fallbackFooterData: FooterData = {
-  id: 1,
-  documentId: 'fallback',
-  createdAt: new Date().toISOString(),
-  publishedAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-  sections: [
-    {
-      id: 1,
-      label: 'Area Informativa',
-      link: [
-        {
-          id: 1,
-          linkType: 'Url',
-          label: 'Servizi e prestazioni',
-          url: '/servizi',
-          openInNewTab: false,
-          style: 'default',
-        },
-        {
-          id: 2,
-          linkType: 'Url',
-          label: 'Come fare per',
-          url: '/come-fare-per',
-          openInNewTab: false,
-          style: 'default',
-        },
-      ],
-    },
-    {
-      id: 2,
-      label: 'Area Istituzionale',
-      link: [
-        {
-          id: 3,
-          linkType: 'Url',
-          label: 'Organizzazione',
-          url: '/organizzazione',
-          openInNewTab: false,
-          style: 'default',
-        },
-        {
-          id: 4,
-          linkType: 'Url',
-          label: 'Contatti',
-          url: '/contatti',
-          openInNewTab: false,
-          style: 'default',
-        },
-      ],
-    },
-  ],
-};
 
 export const fetchFooterData = async (): Promise<FooterData> => {
   try {
@@ -383,9 +196,7 @@ export const fetchFooterData = async (): Promise<FooterData> => {
     
     // Try multiple approaches to get footer data
     const approaches = [
-      // Approach 1: Direct fetch with populate
       async () => {
-        console.log('Approach 1: Direct fetch with populate...');
         const response = await api.get<StrapiFooterResponse<FooterData>>('/footer', {
           params: {
             'populate': {
@@ -404,38 +215,6 @@ export const fetchFooterData = async (): Promise<FooterData> => {
         }
         throw new Error('No data in response');
       },
-      
-      // Approach 2: URL-encoded populate
-      async () => {
-        console.log('Approach 2: URL-encoded populate...');
-        const response = await api.get<StrapiFooterResponse<FooterData>>('/footer', {
-          params: {
-            'populate[sections][populate]': '*'
-          }
-        });
-        
-        if (response.data.data) {
-          console.log('✅ Approach 2 successful');
-          const footerData = response.data.data.attributes || response.data.data;
-          console.log('Extracted footer data:', footerData);
-          return footerData;
-        }
-        throw new Error('No data in response');
-      },
-      
-      // Approach 3: Simple populate
-      async () => {
-        console.log('Approach 3: Simple populate...');
-        const response = await api.get<StrapiFooterResponse<FooterData>>('/footer?populate=*');
-        
-        if (response.data.data) {
-          console.log('✅ Approach 3 successful');
-          const footerData = response.data.data.attributes || response.data.data;
-          console.log('Extracted footer data:', footerData);
-          return footerData;
-        }
-        throw new Error('No data in response');
-      }
     ];
     
     // Try each approach until one works
@@ -484,79 +263,11 @@ export const getFooterDataForISR = async (): Promise<FooterData> => {
   }
 };
 
-// Fallback branding data in case Strapi is unavailable
-const fallbackBrandingData: BrandingData = {
-  id: 1,
-  documentId: 'fallback',
-  createdAt: new Date().toISOString(),
-  publishedAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-  name: 'Nome della ASL',
-  tagLine: 'Portale Sanitario Regionale',
-  logo: {
-    id: 1,
-    url: '/assets/logo.svg',
-    alternativeText: 'ASL Logo',
-  },
-  socialLinks: [
-    {
-      id: 1,
-      platform: 'facebook',
-      url: 'https://facebook.com',
-    },
-    {
-      id: 2,
-      platform: 'instagram',
-      url: 'https://instagram.com',
-    },
-    {
-      id: 3,
-      platform: 'twitter',
-      url: 'https://twitter.com',
-    },
-  ],
-  contacts: [
-    {
-      id: 1,
-      type: 'phone',
-      value: '+39 0609090909',
-      label: 'Centralino',
-    },
-    {
-      id: 2,
-      type: 'email',
-      value: 'info@asl.example.it',
-      label: 'Email',
-    },
-    {
-      id: 3,
-      type: 'pec',
-      value: 'indirizzopecdellente@pec.gov.it',
-      label: 'PEC',
-    },
-  ],
-  mainAddress: {
-    street: 'Via della Sede',
-    streetNumber: '23',
-    zip_code: '09872',
-    city: 'Città',
-    province: 'AA',
-    region: 'Regione',
-    country: 'Italia',
-    full_address: 'Via della Sede, 23 09872 Città (AA)',
-  },
-  vatNumber: 'P.IVA XXXXXXXXXXX',
-};
 
 export const fetchBrandingData = async (): Promise<BrandingData> => {
   try {
-    console.log('Fetching branding data from Strapi...');
-    
-    // Try multiple approaches to get branding data
     const approaches = [
-      // Approach 1: Direct fetch with populate
       async () => {
-        console.log('Approach 1: Direct fetch with populate...');
         const response = await api.get<StrapiBrandingResponse<BrandingData>>('/branding', {
           params: {
             'populate': {
@@ -580,45 +291,10 @@ export const fetchBrandingData = async (): Promise<BrandingData> => {
           console.log('✅ Approach 1 successful');
           const brandingData = response.data.data.attributes || response.data.data;
           console.log('Extracted branding data:', brandingData);
-          return processBrandingData(brandingData);
+          return processBrandingData(brandingData as RawStrapiBrandingData);
         }
         throw new Error('No data in response');
       },
-      
-      // Approach 2: URL-encoded populate
-      async () => {
-        console.log('Approach 2: URL-encoded populate...');
-        const response = await api.get<StrapiBrandingResponse<BrandingData>>('/branding', {
-          params: {
-            'populate[logo][populate]': '*',
-            'populate[socialLinks][populate]': '*',
-            'populate[contacts][populate]': '*',
-            'populate[mainAddress][populate]': '*'
-          }
-        });
-        
-        if (response.data.data) {
-          console.log('✅ Approach 2 successful');
-          const brandingData = response.data.data.attributes || response.data.data;
-          console.log('Extracted branding data:', brandingData);
-          return processBrandingData(brandingData);
-        }
-        throw new Error('No data in response');
-      },
-      
-      // Approach 3: Simple populate
-      async () => {
-        console.log('Approach 3: Simple populate...');
-        const response = await api.get<StrapiBrandingResponse<BrandingData>>('/branding?populate=*');
-        
-        if (response.data.data) {
-          console.log('✅ Approach 3 successful');
-          const brandingData = response.data.data.attributes || response.data.data;
-          console.log('Extracted branding data:', brandingData);
-          return processBrandingData(brandingData);
-        }
-        throw new Error('No data in response');
-      }
     ];
     
     // Try each approach until one works
@@ -657,40 +333,56 @@ export const fetchBrandingData = async (): Promise<BrandingData> => {
 };
 
 // Function to process and normalize branding data
-const processBrandingData = (data: any): BrandingData => {
+const processBrandingData = (data: RawStrapiBrandingData): BrandingData => {
   // Fix logo URL to be absolute
   const logo = data.logo ? {
-    ...data.logo,
-    url: data.logo.url.startsWith('http') 
-      ? data.logo.url 
-      : `${config.strapi.baseUrl}${data.logo.url}`
+    id: data.logo.id || 1,
+    url: data.logo.url?.startsWith('http') 
+      ? data.logo.url
+      : `${config.strapi.baseUrl}${data.logo.url}`,
+    alternativeText: data.logo.alternativeText,
+    width: data.logo.width,
+    height: data.logo.height,
   } : undefined;
 
   // Normalize social links platform names to lowercase
-  const socialLinks = data.socialLinks?.map((link: any) => ({
-    ...link,
-    platform: link.platform?.toLowerCase() as any
+  const socialLinks = data.socialLinks?.map((link) => ({
+    id: link.id || 1,
+    platform: (link.platform?.toLowerCase() as 'facebook' | 'instagram' | 'twitter' | 'youtube' | 'linkedin') || 'facebook',
+    url: link.url || '',
   })) || [];
 
   // Process contacts
-  const contacts = data.contacts?.map((contact: any) => ({
-    ...contact,
-    type: contact.type?.toLowerCase() as any
+  const contacts = data.contacts?.map((contact) => ({
+    id: contact.id || 1,
+    type: (contact.type?.toLowerCase() as 'phone' | 'email' | 'pec' | 'fax' | 'website') || 'email',
+    value: contact.value || '',
+    label: contact.label,
+    notes: contact.notes,
   })) || [];
 
   // Process address
   const mainAddress = data.mainAddress ? {
-    ...data.mainAddress,
+    label: data.mainAddress.label,
+    street: data.mainAddress.street || '',
+    streetNumber: data.mainAddress.streetNumber || '',
+    zip_code: data.mainAddress.zip_code || '',
+    city: data.mainAddress.city || '',
+    province: data.mainAddress.province || '',
+    region: data.mainAddress.region || '',
+    country: data.mainAddress.country || '',
+    latitude: data.mainAddress.latitude,
+    longitude: data.mainAddress.longitude,
     full_address: data.mainAddress.full_address || 
-      `${data.mainAddress.street}, ${data.mainAddress.streetNumber} ${data.mainAddress.zip_code} ${data.mainAddress.city} (${data.mainAddress.province})`
+      `${data.mainAddress.street || ''}, ${data.mainAddress.streetNumber || ''} ${data.mainAddress.zip_code || ''} ${data.mainAddress.city || ''} (${data.mainAddress.province || ''})`
   } : fallbackBrandingData.mainAddress;
 
   return {
-    id: data.id,
-    documentId: data.documentId,
-    createdAt: data.createdAt,
-    publishedAt: data.publishedAt,
-    updatedAt: data.updatedAt,
+    id: data.id || fallbackBrandingData.id,
+    documentId: data.documentId || fallbackBrandingData.documentId,
+    createdAt: data.createdAt || fallbackBrandingData.createdAt,
+    publishedAt: data.publishedAt || fallbackBrandingData.publishedAt,
+    updatedAt: data.updatedAt || fallbackBrandingData.updatedAt,
     name: data.name || fallbackBrandingData.name,
     tagLine: data.tagLine || fallbackBrandingData.tagLine,
     logo,
@@ -705,7 +397,7 @@ const processBrandingData = (data: any): BrandingData => {
 export const getBrandingDataForISR = async (): Promise<BrandingData> => {
   try {
     const data = await fetchBrandingData();
-    return processBrandingData(data);
+    return processBrandingData(data as RawStrapiBrandingData);
   } catch (error) {
     console.error('Error in ISR branding fetch:', error);
     return fallbackBrandingData;
