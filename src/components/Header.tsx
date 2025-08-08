@@ -202,7 +202,7 @@ export default function Header() {
                             headerData.middleBar.searchLabel && (
                               <button className="src-btn d-flex gap-3 align-items-center bg-transparent text-white">
                                 {headerData.middleBar.searchLabel}
-                                <img src="/assets/icons/src.svg" alt="search" />
+                                <Image src="/assets/icons/src.svg" alt="search" width={20} height={20} />
                               </button>
                             )}
                         </div>
