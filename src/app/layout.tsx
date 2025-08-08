@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Titillium_Web } from 'next/font/google';
 import './globals.css';
 import 'bootstrap-italia/dist/css/bootstrap-italia.min.css';
+import './mobile-nav.css';
+import { BrandingProvider } from '@/components/BrandingProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,7 +34,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${titillium.variable}`}>
-        {children}
+        <BrandingProvider>
+          {children}
+        </BrandingProvider>
       </body>
     </html>
   );
