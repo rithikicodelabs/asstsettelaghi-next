@@ -3,8 +3,17 @@
 import { useState } from 'react';
 import { testStrapiConnection, fetchHeaderByDocumentId } from '@/lib/api';
 
+interface DebugInfo {
+  timestamp: string;
+  steps: string[];
+  connection?: { connected: boolean; message: string };
+  rawHeaderData?: unknown;
+  headerData?: unknown;
+  approaches?: Record<string, unknown>;
+}
+
 export default function DebugHeaderPage() {
-  const [debugInfo, setDebugInfo] = useState<any>(null);
+  const [debugInfo, setDebugInfo] = useState<DebugInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [documentId, setDocumentId] = useState('qan5rnuvvd226v26bu44h6bm');
 
@@ -12,7 +21,7 @@ export default function DebugHeaderPage() {
     setLoading(true);
     setDebugInfo(null);
     
-    const debugData: any = {
+    const debugData: DebugInfo = {
       timestamp: new Date().toISOString(),
       steps: []
     };
@@ -157,7 +166,7 @@ export default function DebugHeaderPage() {
                   ))}
                 </div>
               ) : (
-                <p>Click "Run Debug" to start debugging</p>
+                <p>Click &quot;Run Debug&quot; to start debugging</p>
               )}
             </div>
           </div>

@@ -259,11 +259,9 @@ export const discoverContentTypes = async (): Promise<string[]> => {
   
   for (const endpoint of commonEndpoints) {
     try {
-      const response = await api.get(`/${endpoint}`);
-      if (response.status === 200) {
-        availableEndpoints.push(endpoint);
-        console.log(`✅ Found endpoint: /${endpoint}`);
-      }
+      await api.get(`/${endpoint}`);
+      availableEndpoints.push(endpoint);
+      console.log(`✅ Found endpoint: /${endpoint}`);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
         console.log(`❌ Endpoint not found: /${endpoint}`);

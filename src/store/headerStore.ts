@@ -5,7 +5,7 @@ import { fetchHeaderData } from '@/lib/api';
 
 export const useHeaderStore = create<HeaderStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       headerData: null,
       isLoading: false,
       error: null,

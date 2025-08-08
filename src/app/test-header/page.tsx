@@ -3,13 +3,14 @@
 import { useHeader } from '@/hooks/useHeader';
 import { testStrapiConnection, discoverContentTypes, fetchHeaderByDocumentId } from '@/lib/api';
 import { useState, useEffect } from 'react';
+import { HeaderData } from '@/types/header';
 
 export default function TestHeaderPage() {
   const { headerData, isLoading, error, isStale, refetch } = useHeader();
   const [strapiStatus, setStrapiStatus] = useState<{ connected: boolean; message: string } | null>(null);
   const [availableEndpoints, setAvailableEndpoints] = useState<string[]>([]);
   const [discovering, setDiscovering] = useState(false);
-  const [documentIdData, setDocumentIdData] = useState<any>(null);
+  const [documentIdData, setDocumentIdData] = useState<HeaderData | null>(null);
   const [documentId, setDocumentId] = useState('qan5rnuvvd226v26bu44h6bm');
 
   useEffect(() => {
