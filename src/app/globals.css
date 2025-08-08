@@ -59,8 +59,9 @@ body {
   color: var(--teal);
 }
 
-/* HEADER UI STYLING  */
-
+/* -------------------------------- 
+          Header UI START here
+--------------------------------- */
 .it-header-slim-links {
   @media (max-width: 991px) {
     height: 100%;
@@ -319,3 +320,7 @@ body {
     width: fit-content;
   }
 }
+
+/* -------------------------------- 
+          Header UI END here
+--------------------------------- */
