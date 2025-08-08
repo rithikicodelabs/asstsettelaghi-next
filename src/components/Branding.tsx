@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useBrandingContext } from './BrandingProvider';
-import Link from 'next/link';
 import Image from 'next/image';
 
 interface BrandingProps {
@@ -143,18 +142,20 @@ const Branding: React.FC<BrandingProps> = ({
           brandingData.socialLinks.length > 0 && (
             <div className="branding-social ms-3">
               <div className="d-flex gap-2">
-                {brandingData.socialLinks.map((social: any) => (
-                  <a
-                    key={social.id}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white text-decoration-none"
-                    aria-label={`Follow us on ${social.platform}`}
-                  >
-                    {getSocialIcon(social.platform)}
-                  </a>
-                ))}
+                {brandingData.socialLinks.map(
+                  (social: { id: number; platform: string; url: string }) => (
+                    <a
+                      key={social.id}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white text-decoration-none"
+                      aria-label={`Follow us on ${social.platform}`}
+                    >
+                      {getSocialIcon(social.platform)}
+                    </a>
+                  ),
+                )}
               </div>
             </div>
           )}

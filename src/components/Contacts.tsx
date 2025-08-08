@@ -68,7 +68,7 @@ const Contacts: React.FC<ContactsProps> = ({ className = '' }) => {
     }
   };
 
-  const getContactLink = (contact: any) => {
+  const getContactLink = (contact: { id: number; type: string; value: string; label?: string }) => {
     const icon = getContactIcon(contact.type);
     
     switch (contact.type) {
@@ -130,7 +130,7 @@ const Contacts: React.FC<ContactsProps> = ({ className = '' }) => {
       )}
 
       {/* Contacts */}
-      {brandingData.contacts.map((contact: any) => (
+      {brandingData.contacts.map((contact: { id: number; type: string; value: string; label?: string }) => (
         <div key={contact.id} className="mb-2">
           {getContactLink(contact)}
         </div>
