@@ -6,13 +6,15 @@ import { FooterSection, FooterLink } from '@/types/footer';
 import Branding from './Branding';
 import Contacts from './Contacts';
 import Link from 'next/link';
+import Image from 'next/image';
+import IconCollection from './IconCollection/IconCollection';
 
 const Footer: React.FC = () => {
   const { footerData, isLoading, error } = useFooter();
 
   if (isLoading) {
     return (
-      <footer className="bg-dark text-white py-4">
+      <footer className="darkGreen-bg text-white py-4">
         <div className="container">
           <div className="row">
             <div className="col-12">
@@ -100,13 +102,21 @@ const Footer: React.FC = () => {
 
   const renderSection = (section: FooterSection) => {
     return (
-      <div key={section.id} className="col-6 col-md-4 col-lg-3 mb-4">
-        <h5 className="h6 text-light mb-3">{section.label}</h5>
+      <div
+        key={section.id}
+        className="col-12 col-md-4 col-lg-3 mb-4 it-footer-menu-container"
+      >
+        <h6 className="mb-4 ">{section.label}</h6>
+
         <div className="d-flex flex-column">
           {section.link.map((link) => (
-            <div key={link.id} className="mb-2">
+            <Link
+              href="#"
+              key={link.id}
+              className="mb-2 p-0 it-footer-menu-link"
+            >
               {renderLink(link)}
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -114,38 +124,32 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="teal-dark-bg text-white py-5">
-      <div className="container">
+    <footer className="darkGreen-bg it-footer-wrapper text-white ">
+      <div className="container-xxl">
         <div className="row">
           {/* Branding Section */}
-          <div className="col-12 mb-4">
-            <div className="row align-items-center">
-              <div className="col-md-6">
-                <Branding
-                  variant="footer"
-                  showLogo={true}
-                  showName={true}
-                  showTagline={true}
-                  showSocialLinks={false}
-                />
-              </div>
-              <div className="col-md-6 text-md-end">
-                <div className="d-flex align-items-center justify-content-md-end">
-                  <span className="text-white-50 me-3">Seguici su</span>
-                  <Branding
-                    variant="footer"
-                    showLogo={false}
-                    showName={false}
-                    showTagline={false}
-                    showSocialLinks={true}
-                  />
-                </div>
-              </div>
+          <div className="col-12">
+            <div className="d-flex flex-column gap-3 gap-lg-5 flex-md-row it-branding-wrapper">
+              <Branding
+                variant="footer"
+                showLogo={true}
+                showName={true}
+                showTagline={false}
+                showSocialLinks={false}
+              />
+
+              <Branding
+                variant="footer"
+                showLogo={true}
+                showName={true}
+                showTagline={false}
+                showSocialLinks={false}
+              />
             </div>
           </div>
 
           {/* Main Footer Sections */}
-          <div className="col-12 mb-4">
+          <div className="col-12">
             <div className="row">
               {footerData.sections.map((section) => renderSection(section))}
             </div>

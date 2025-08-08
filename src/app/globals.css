@@ -48,7 +48,7 @@ body {
   background-color: var(--tealLight) !important;
 }
 
-.--darkGreen-bg {
+.darkGreen-bg {
   background-color: var(--darkGreen) !important;
 }
 
@@ -149,17 +149,19 @@ body {
     & .logoContainer {
       height: 36px;
       width: 36px;
+      position: relative;
       margin-right: 8px;
-
-      img {
-        width: 100%;
-        height: auto;
-      }
+      object-fit: contain;
 
       @media (min-width: 992px) {
         margin-right: 16px;
         height: 72px;
         width: 72px;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
       }
     }
   }
@@ -260,7 +262,7 @@ body {
     font-size: var(--font-size-1);
     line-height: var(--font-line-height-xs);
     letter-spacing: 0;
-    color: var(--textColor);
+    color: var(--textColor) !important;
 
     &:hover {
       text-decoration: none;
@@ -328,4 +330,59 @@ body {
 
 /* -------------------------------- 
           Header UI END here
+--------------------------------- */
+
+/* -------------------------------- 
+          Footer UI start here
+--------------------------------- */
+
+.it-footer-wrapper {
+  padding: 40px 0;
+
+  & .it-branding-wrapper {
+    margin-bottom: 32px;
+    & .branding {
+      @media (min-width: 992px) {
+        margin-bottom: 40px;
+      }
+
+      & .logoContainer {
+        height: 36px;
+        width: 36px;
+        position: relative;
+        margin-right: 8px;
+        object-fit: contain;
+
+        @media (min-width: 992px) {
+          margin-right: 16px;
+        }
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  & .it-footer-menu-container {
+    & h6 {
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-2);
+
+    }
+
+    & .it-footer-menu-link {
+      font-size: var(--font-size-2);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--font-line-height-xs);
+      text-decoration: underline;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+  }
+}
+
+/* -------------------------------- 
+          Footer UI start here
 --------------------------------- */

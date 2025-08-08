@@ -19,7 +19,7 @@ import IconCollection from '@/components/IconCollection/IconCollection';
 
 export default function Header() {
   const { headerData, isLoading, error, fetchHeaderData } = useHeaderStore();
-  const { toggleDrawer, toggleSearch, toggleLanguage } = useMobileNavStore();
+  const { toggleDrawer, toggleSearch } = useMobileNavStore();
 
   useEffect(() => {
     fetchHeaderData();
@@ -43,6 +43,7 @@ export default function Header() {
   if (!headerData) {
     return <Navbar />;
   }
+
   return (
     <header className="it-header-wrapper">
       {/* Top Bar */}
@@ -273,54 +274,56 @@ export default function Header() {
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              {headerData.bottomBar &&
-                headerData.bottomBar.phoneNumbers &&
-                headerData.bottomBar.phoneNumbers.length > 0 && (
-                  <div className="it-header-slim-left-zone-bottom d-flex justify-content-between align-items-center py-2">
-                    {headerData.bottomBar.phoneNumbers.map(
-                      (phone, phoneIndex) => (
-                        <div
-                          key={phoneIndex}
-                          className="it-header-slim-left-zone-bottom-container my-1"
-                        >
-                          <div className="d-flex align-items-center gap-2">
-                            <span className="label d-none d-md-inline">
-                              {phone.label}
-                            </span>
-                            <Link
-                              href={`tel:${phone.phoneNumber}`}
-                              className="it-phone-number text-decoration-none "
-                            >
-                              CUP{' '}
-                              <span className="text-purple text-decoration-underline ">
-                                {phone.phoneNumber}
-                              </span>
-                            </Link>
-                            <IconCollection name={'phone'} />
-                          </div>
-
-                          {phone.callToAction && (
+              <div className="it-header-slim-wrapper-content it-header-slim-links">
+                {headerData.bottomBar &&
+                  headerData.bottomBar.phoneNumbers &&
+                  headerData.bottomBar.phoneNumbers.length > 0 && (
+                    <div className="it-header-slim-left-zone-bottom d-flex justify-content-between align-items-center py-2">
+                      {headerData.bottomBar.phoneNumbers.map(
+                        (phone, phoneIndex) => (
+                          <div
+                            key={phoneIndex}
+                            className="it-header-slim-left-zone-bottom-container my-1"
+                          >
                             <div className="d-flex align-items-center gap-2">
                               <span className="label d-none d-md-inline">
-                                {phone.callToAction}
+                                {phone.label}
                               </span>
-
                               <Link
-                                href="#"
+                                href={`tel:${phone.phoneNumber}`}
                                 className="it-phone-number text-decoration-none "
                               >
-                                URP
-                                <span className="text-purple text-decoration-underline "></span>
+                                CUP{' '}
+                                <span className="text-purple text-decoration-underline ">
+                                  {phone.phoneNumber}
+                                </span>
                               </Link>
-
                               <IconCollection name={'phone'} />
                             </div>
-                          )}
-                        </div>
-                      ),
-                    )}
-                  </div>
-                )}
+
+                            {phone.callToAction && (
+                              <div className="d-flex align-items-center gap-2">
+                                <span className="label d-none d-md-inline">
+                                  {phone.callToAction}
+                                </span>
+
+                                <Link
+                                  href="#"
+                                  className="it-phone-number text-decoration-none "
+                                >
+                                  URP
+                                  <span className="text-purple text-decoration-underline "></span>
+                                </Link>
+
+                                <IconCollection name={'phone'} />
+                              </div>
+                            )}
+                          </div>
+                        ),
+                      )}
+                    </div>
+                  )}
+              </div>
             </div>
           </div>
         </div>

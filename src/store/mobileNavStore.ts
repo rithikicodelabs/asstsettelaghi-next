@@ -21,10 +21,10 @@ export const useMobileNavStore = create<MobileNavState>((set, get) => ({
 
   toggleDrawer: () => {
     const { isDrawerOpen } = get();
-    set({ 
+    set({
       isDrawerOpen: !isDrawerOpen,
       isSearchOpen: false,
-      isLanguageOpen: false 
+      isLanguageOpen: false,
     });
   },
 
@@ -33,19 +33,19 @@ export const useMobileNavStore = create<MobileNavState>((set, get) => ({
   },
 
   openDrawer: () => {
-    set({ 
+    set({
       isDrawerOpen: true,
       isSearchOpen: false,
-      isLanguageOpen: false 
+      isLanguageOpen: false,
     });
   },
 
   toggleSearch: () => {
     const { isSearchOpen } = get();
-    set({ 
+    set({
       isSearchOpen: !isSearchOpen,
       isDrawerOpen: false,
-      isLanguageOpen: false 
+      isLanguageOpen: false,
     });
   },
 
@@ -55,10 +55,10 @@ export const useMobileNavStore = create<MobileNavState>((set, get) => ({
 
   toggleLanguage: () => {
     const { isLanguageOpen } = get();
-    set({ 
+    set({
       isLanguageOpen: !isLanguageOpen,
       isDrawerOpen: false,
-      isSearchOpen: false 
+      isSearchOpen: false,
     });
   },
 
@@ -67,10 +67,10 @@ export const useMobileNavStore = create<MobileNavState>((set, get) => ({
   },
 
   closeAll: () => {
-    set({ 
+    set({
       isDrawerOpen: false,
       isSearchOpen: false,
-      isLanguageOpen: false 
+      isLanguageOpen: false,
     });
   },
-})); 
+}));
