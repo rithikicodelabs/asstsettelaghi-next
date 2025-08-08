@@ -14,7 +14,6 @@ const api = axios.create({
 
 export const fetchHeaderData = async (): Promise<HeaderData> => {
   try {
-    console.log('Fetching header data from Strapi...');
     const approaches = [
       async () => {
         console.log('Approach 1: Direct fetch with populate...');
